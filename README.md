@@ -4,7 +4,7 @@
 - Resized images is moved to \resized folder (destination).
 - Warning! Pictures are deleted from source after resize.
 - I use this program in my Dropbox, to keep all my camera photos down in size, ready for web and email.
-- Download this software from https://github.com/skjolddesign/auto-resizer
+- Download this software from https://github.com/skjolddesign/picresize
 
 
 ###### Installation:
