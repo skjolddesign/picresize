@@ -6,7 +6,6 @@
 - I use this program in my Dropbox, to keep all my camera photos down in size, ready for web and email.
 - Download this software from https://github.com/skjolddesign/auto-resizer
 
-![screenshot1](https://user-images.githubusercontent.com/2446237/51687792-90e5bd00-1ff3-11e9-8e73-343a98ae4483.png)
 
 ###### Installation:
 - Copy 'picresize.bat' and 'scale.bat' to the folder you want to resize.
