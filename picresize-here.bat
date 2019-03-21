@@ -1,29 +1,35 @@
 @ECHO OFF
-rem FIXED DIRECTORY
-rem set "source_folder=f:\downloads\img"
-rem set "destination_folder_1=f:\downloads\img\Auto-resized"
-
-rem DYNAMIC DIRECTORY
+rem DYNAMIC DIRECTORY (you can set these fixed if you want)
 set "source_folder=%CD%"
-set "destination_folder_1=%CD%\resized"
-
-echo Picresize.
-echo Resize all jpg pictures in folder to 1920 X 1280.
-echo TIP: SET SOURCE DIRECTORY WITH WINDOWS SHORTCUT 'START IN' PARAMETER.
+set "destination_folder_1=%source_folder%\Resized"
+set "destination_original=%source_folder%\Backup"
+echo ______________________________________________________
+echo PICRESIZE v1.1.
+echo RESIZE .JPG TO 1920 X 1280.
+echo https://github.com/skjolddesign/picresize
+echo ______________________________________________________
+echo Usage: 
+echo Make Windows Shortcut. 
+echo 'Start in' parameter sets Source folder.
+echo If 'Start in' is blank, it will use folder started from.
+echo If argument -delete is added to 'Target' parameter, Source will be deleted.
+echo If argument -delete is not added, Source will be moved to Backup folder.
+echo ______________________________________________________
 echo SOURCE:      %source_folder%
 echo DESTINATION: %destination_folder_1%
-echo *******************************************
-echo WARNING, SOURCE IMAGES WILL BE DELETED!
-echo RESIZED IMAGES WILL BE FOUND IN resized FOLDER.
-echo USE THIS SOFTWARE AT YOUR OWN RISK
-echo *******************************************
 
-REM dir test
-rem echo dir test
-rem echo %CD%
-rem echo %~dp0
-rem Echo %0
-rem echo %~f0
+
+rem user added '-delete' argument
+if "%1"=="-delete" (
+	echo Notice! Delete source image selected.
+)ELSE (
+	REM MAKE DESTINATION DIR
+	if not exist "%destination_original%" mkdir "%destination_original%
+	echo BACKUP:      %destination_original%
+)
+
+
+
 
 REM CHECK DEPENDENCY
 if not exist "%~dp0scale.bat" GOTO SKIP04
@@ -31,18 +37,11 @@ if not exist "%~dp0scale.bat" GOTO SKIP04
 REM MAKE DESTINATION DIR
 if not exist "%destination_folder_1%" mkdir "%destination_folder_1%"
 
-
-
-REM Following Choice can be commented out if you want to run this script without intervention.
-:choice
-set /P c=Are you sure you want to continue[Y/N]?
-if /I "%c%" EQU "Y" goto :answeryes
-if /I "%c%" EQU "N" goto :answerno
-goto :choice
-
+goto :answeryes
 
 
 :LOOP    
+PING 1.1.1.1 -n 2 -w 1000 >NUL
 IF NOT EXIST "%source_folder%\*jpg" GOTO SKIP01
 REM All this gets done if the file exists...
 if not exist "%destination_folder_1%" GOTO SKIP02
@@ -50,15 +49,22 @@ REM ALL THIS GETS DONE IF FOLDER EXISTS
 
 REM DOWNSIZE
 for %%a in ("%source_folder%\*jpg") do (
-   REM call scale.bat -source "%%~fa" -target "%destination_folder_1%\%%~nxa" -max-height 1280 -max-width 1920 -keep-ratio yes -force yes
-   call "%~dp0scale.bat" -source "%%~fa" -target "%destination_folder_1%\%%~nxa" -max-height 1280 -max-width 1920 -keep-ratio yes -force yes
+   call %~dp0scale.bat -source "%%a" -target "%destination_folder_1%\%%~nxa" -max-height 1280 -max-width 1920 -keep-ratio yes -force yes
    IF ERRORLEVEL 1 GOTO SKIP03
-   del "%%a"
-   echo Resized %%a
-   
+	rem copy if delete not selected
+	IF "%~1"=="-d" (
+		rem echo delete
+		) ELSE (
+		xcopy "%%a" "%destination_original%" /q /y
+		)
+	del "%%a"
+	echo Resized %%a
+
+)
+
 )
 echo Ready
-PING 1.1.1.1 -n 10 -w 1000 >NUL
+PING 1.1.1.1 -n 5 -w 1000 >NUL
 
 
 
@@ -67,7 +73,7 @@ PING 1.1.1.1 -n 10 -w 1000 >NUL
 :
 :SKIP01
 rem echo no jpg found %source_folder%
-PING 1.1.1.1 -n 10 -w 1000 >NUL
+PING 1.1.1.1 -n 5 -w 1000 >NUL
 GOTO LOOP
 
 :
@@ -92,7 +98,8 @@ pause
 exit
 
 :answeryes
-echo Ready for you to place images in Source
+echo ______________________________________________________
+echo Ready for image in Source
 GOTO LOOP
 
 :answerno
