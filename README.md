@@ -1,7 +1,7 @@
 ###### About:
 - picresize-here.bat resize all jpg pictures in running folder.
-- New image size is 1920 X 1280 pixels.
 - Automatically detects new images in folder, and resizes them.
+- New image size is 1920 X 1280 pixels.
 - Resized images is stored to \Resized folder.
 - Original image is moved to \Backup folder.
 - Original can be deleted with -delete argument.
