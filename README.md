@@ -1,5 +1,5 @@
 ###### About:
-- picresize.bat resize all jpg pictures in running folder(source) to 1920 X 1280 pixels.
+- picresize-here.bat resize all jpg pictures in running folder(source) to 1920 X 1280 pixels.
 - Continous watches folder for new pictures to resize.
 - Resized images is moved to \resized folder (destination).
 - Warning! Pictures are deleted from source after resize.
@@ -8,7 +8,7 @@
 
 
 ###### Installation:
-- Copy 'picresize.bat' and 'scale.bat' to the folder you want to resize.
+- Copy 'picresize-here.bat' and 'scale.bat' to the folder you want to resize.
 - Run picresize.bat.
 
 ###### Optional: 
