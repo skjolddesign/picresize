@@ -7,6 +7,7 @@
 - Original can be deleted with -delete argument.
 - Good for keeping camera pictures down in size, ready for web and email.
 - Download this software from https://github.com/skjolddesign/picresize
+- Screenshot: https://i.postimg.cc/K839HzxP/autosize.png
 
 
 ###### Installation:
